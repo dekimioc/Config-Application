@@ -1,14 +1,13 @@
 import './App.scss';
+import Header from './components/Header/Header';
+import Home from './pages/Home/Home';
 
 function App() {
   return (
-    <div className="App">
-      <div className="container">
-        <div className="row">
-
-        </div>
-      </div>
-    </div>
+    <main className="App">
+      <Header />
+      <Home />
+    </main>
   );
 }
 
