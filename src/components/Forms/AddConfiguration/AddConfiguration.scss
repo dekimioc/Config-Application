@@ -1,0 +1,15 @@
+.error-msg {
+  font-weight: bold;
+  color: red;
+}
+.succes-msg {
+  color: rgb(40, 213, 80);
+  font-weight: bold;
+}
+.form-style-add {
+  input,
+  textarea,
+  label {
+    width: 100%;
+  }
+}

@@ -5,10 +5,10 @@ import './SingleConfigCard.scss';
 
 const SingleConfigCard = ({ link, name, version }) => {
     return (
-        <div className="col-4 single-card" to={link}>
+        <div className="col-lg-4 col-md-6 col-12 col-sm-12 single-card" to={link}>
             <h3>{name}</h3>
-            <p>{version}</p>
-            <Link to={link}>View Config</Link>
+            <p><span>Version: </span>{version}</p>
+            <Link to={link} className="view-config-button">View Config</Link>
         </div>
     )
 };

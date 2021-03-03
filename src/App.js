@@ -13,8 +13,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('loged'));
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
-  const [errorLog, setErrorLog] = useState(false);
-  const [data, setData] = useState([]);
+  const [errorLog, setErrorLog] = useState("");
 
   const logOut = () => {
     // history.push("/");
@@ -34,26 +33,33 @@ function App() {
           localStorage.setItem('loged', true);
           localStorage.setItem('token', response.data.token);
           setIsLoggedIn(true);
-          setData(response.data)
           setErrorLog(false);
 
         }
       }).then(() => {
       })
       .catch(function (error) {
-        console.log(error);
         setErrorLog(true);
+        if (error.response) {
+          if (error.response.status === 403) {
+            setErrorLog("Invalid credentials!")
+          }
+          if (error.response.status === 400) {
+            setErrorLog("Bad request")
+          }
+          if (error.response.status === 500) {
+            setErrorLog("Unexpected error!")
+          }
+        }
       });
   }
   // LOGIN MAIL HANDLER 
   const logInMailHandler = (e) => {
     setEmail(e.target.value);
-    console.log(e.target.value);
   }
   // LOGIN PASSWORD HANDLER
   const logInPassHandler = (e) => {
     setPass(e.target.value);
-    console.log(e.target.value);
   }
 
   return (
@@ -71,6 +77,7 @@ function App() {
                 emailHandler={(e) => logInMailHandler(e)}
                 passwordValue={pass}
                 passwordHandler={(e) => logInPassHandler(e)}
+                errorLog={errorLog}
               />
               <RegistrationForm
 

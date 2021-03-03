@@ -38,7 +38,6 @@
 }
 .check-button {
   border: 1px solid;
-  width: 100px;
   padding: 10px 20px;
   text-align: center;
   margin: 10px auto;
@@ -48,5 +47,13 @@
   &:hover {
     background-color: #000;
     color: #fff;
+  }
+}
+.form-style {
+  input,
+  textarea,
+  label {
+    width: 100%;
+    padding: 5px;
   }
 }

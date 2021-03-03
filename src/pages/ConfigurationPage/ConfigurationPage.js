@@ -17,8 +17,8 @@ const ConfigurationPage = ({ match, }) => {
         axios.get(`${process.env.REACT_APP_SWAGGER_API}config`, { headers: { 'Authorization': localStorage.getItem('token') } })
             .then(function (response) {
                 // handle success
-                console.log(response.data);
                 setAllData(response.data);
+                console.log(response);
                 setIsLoaded(true);
             })
             .catch(function (error) {
@@ -27,19 +27,7 @@ const ConfigurationPage = ({ match, }) => {
             })
     }, []
     )
-    // GET DATA FOR SINGLE CONFIG
-    const getSingleCardData = (e) => {
-        axios.get(`${process.env.REACT_APP_SWAGGER_API}config/${e.currentTarget.getAttribute('data-name')}?version=${e.currentTarget.getAttribute('data-version')}`, { headers: { 'Authorization': localStorage.getItem('token') } })
-            .then(function (response) {
-                // handle success
-                console.log(response.data);
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            })
 
-    }
     return (
         <div>
 
@@ -50,18 +38,19 @@ const ConfigurationPage = ({ match, }) => {
                             <h1 className="mb-5">CONFIGURATION</h1>
                             <Link className="add-new-link mb-5 mt-5" to="/add-new">Add New Configuration</Link>
                         </div>
-                        <div class="row">
-                            {allData.map(el =>
-
-                                <Route exact
-                                    path={`${match.path}`}
-                                    component={() => <SingleConfigCard link={`${match.path}/${el.config_name}/${el.config_version}`}
-                                        name={el.config_name} version={el.config_version}
-                                    />
-                                    }
-                                />)}
-                        </div>
                     </div>
+                    <div className="row">
+                        {allData.map((el, i) =>
+
+                            <Route key={i} exact
+                                path={`${match.path}`}
+                                component={() => <SingleConfigCard link={`${match.path}/${el.config_name}/${el.config_version}`}
+                                    name={el.config_name} version={el.config_version}
+                                />
+                                }
+                            />)}
+                    </div>
+                    {/* </div> */}
                     <Route exact path={`${match.path}/:name/:version`} component={SingleCardPage} />
                 </div> : <Loader />}
         </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './RegistrationForm.scss';
 
 const RegistrationForm = () => {
     const [email, setEmail] = useState('');
@@ -20,7 +21,7 @@ const RegistrationForm = () => {
         setPassword(e.target.value);
     }
     const passwordConfirmHandler = e => {
-        setConfirmPassword(e.target.value)
+        setConfirmPassword(e.target.value);
     }
 
     const bodyParameters = {
@@ -31,8 +32,14 @@ const RegistrationForm = () => {
 
     const sendRegistration = (e) => {
         e.preventDefault();
+        setErrorMessage("");
+        setMessageOk("");
         if (password !== confirmPassword) {
             setErrorMessage("Passwords are not matching!");
+            return false
+        }
+        if (!email || !password || !confirmPassword) {
+            setErrorMessage("You must fill all fields!");
             return false
         }
         axios.post(`${process.env.REACT_APP_SWAGGER_API}register`, bodyParameters)
@@ -44,25 +51,27 @@ const RegistrationForm = () => {
                 }
             })
             .catch(function (error) {
-                console.log(error);
                 if (error.response) {
                     if (error.response.status === 403) {
-                        messageError("User already exists");
+                        setErrorMessage("User already exists");
                     } else {
-                        messageError("Unexpected error!");
+                        setErrorMessage("Unexpected error!");
                     }
                 }
             });
     }
 
     return (
-        <form onSubmit={(e) => sendRegistration(e)}>
+        <form class="reg-form" onSubmit={(e) => sendRegistration(e)}>
+            <label className="text-left mt-3">Email</label>
             <input type="email" placeholder="Email" value={email} onChange={e => emailHandler(e)} />
+            <label className="text-left mt-3">Password</label>
             <input type="password" placeholder="Password" value={password} onChange={e => passwordHandler(e)} />
+            <label className="text-left mt-3">Confirm Password</label>
             <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={e => passwordConfirmHandler(e)} />
-            <input type="submit" value="Submit" />
-            <p>{messageError}</p>
-            <p>{messageOk}</p>
+            <input className="button mt-5" type="submit" value="Submit" />
+            {messageError ? <p class="msg-error mt-3">{messageError}</p> : null}
+            {messageOk ? <p class="msg-ok mt-3">{messageOk}</p> : null}
         </form>
     )
 };
