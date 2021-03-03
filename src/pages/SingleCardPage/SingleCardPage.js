@@ -127,6 +127,7 @@ const SingleCardPage = ({ match }) => {
     }
 
     const copyToClipBoard = async copyMe => {
+        console.log(copyMe)
         try {
             await navigator.clipboard.writeText(copyMe.target.previousElementSibling.innerText);
             setCopySuccess('Copied!');
@@ -168,7 +169,7 @@ const SingleCardPage = ({ match }) => {
                 </div> : <Loader />}
 
             <div className="col-lg-6 col-md-6 col-sm-12 col-12 preview-json">
-                {jsonValue.split(",").map((e, i) => <div key={i} className="d-flex copy-el"><p className="copy-el" >{e},</p><img className="img-copy" onClick={(copyMe) => copyToClipBoard(copyMe)} src={copyIcon} /><span>{copySuccess}</span></div>)}
+                {jsonValue.split(",").map((e, i) => <div key={i} className="d-flex copy-el"><p className="copy-el" >{e},</p><img className="img-copy" onClick={(copyMe) => copyToClipBoard(copyMe)} src={copyIcon} /></div>)}
             </div>
         </div>
     )
