@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import './Home.scss';
 import LogInForm from '../../components/Forms/LogInForm/LogInForm';
 
-const Home = () => {
+const Home = ({ ...props }) => {
     const [loginFormVisible, setLoginFormVisible] = useState(false);
     const [registerFormVisible, setRegisterFormVisible] = useState(false);
+    console.log(props.children);
 
-    const loginFormToggler = () => {
+    const loginFormToggler = (props) => {
         setLoginFormVisible(!loginFormVisible);
         setRegisterFormVisible(false);
     }
@@ -25,12 +26,14 @@ const Home = () => {
                 </div>
                 <div className="col-6">
                     <p onClick={loginFormToggler}>Log In</p>
-                    {loginFormVisible ? <LogInForm /> : null}
+                    {loginFormVisible ?
+                        props.children[0]
+                        : null}
 
                 </div>
                 <div className="col-6">
                     <p onClick={registerFormToggler}>Register</p>
-                    {registerFormVisible ? <p>Register Form</p> : null}
+                    {registerFormVisible ? props.children[1] : null}
 
                 </div>
             </div>

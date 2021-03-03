@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Header.scss';
 
-const Header = () => {
+const Header = ({ logedOut, isLogedUser }) => {
+
     return (
         <header className="container-fluid">
             <div className="container">
@@ -9,13 +10,11 @@ const Header = () => {
                     <div className="col-md-6">
                         <p>Logo</p>
                     </div>
-                    <div className="col-md-6">
-                        <span className="">Register</span>
-                        <span className="">Log In</span>
-                    </div>
-                    <div className="col-md-6">
-                        <span className="btn">Log Out</span>
-                    </div>
+                    {isLogedUser ? <div className="col-md-6">
+                        <span className="btn text-white" onClick={logedOut}>Log Out</span>
+                    </div> : null}
+
+
                 </div>
             </div>
         </header>
